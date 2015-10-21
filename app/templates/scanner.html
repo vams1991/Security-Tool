@@ -1,0 +1,34 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <script type="text/javascript">
+    function set_url(set_url)
+    {
+        form = document.forms['scanner'];
+        form.elements['seed_url'].value = seed_url;
+    }
+    </script>
+    <form action="" method="post" name="scanner">
+    <center>
+        <h1>Scanner </h1>
+        {{ form.hidden_tag() }}
+        <p>
+            Please enter the URL (http/https):<br>
+            {{ form.seed_url(size=40,autocomplete="on") }}
+            {% for error in form.seed_url.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            <input type="submit" value="Scan"><br>
+        </p>
+        </center>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}{% endwith %}
+{% endblock %}
